@@ -36,6 +36,7 @@ td {
   width: 25%;
   height: 60px;
   font-size: 0.8em;
+  padding: 0;
 }
 
 td:hover {
