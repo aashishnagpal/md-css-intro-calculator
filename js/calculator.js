@@ -36,6 +36,13 @@
       case 'Backspace':
       case '=':
         return '';
+      case '+':
+      case '-':
+        return ' ' + key + ' ';
+      case '*':
+        return ' &times; ';
+      case '/':
+        return ' &divide ';
       default:
         return key;
     }
@@ -79,7 +86,7 @@
   // This function is introduced to reduce some repeated code
   // This function returns whether the last character in the parameter string is an operator or not
   var isLastCharacterOperator = function (string) {
-    var lastCharacter = string.slice(-1);
+    var lastCharacter = string.split(' ').join('').slice(-1);
     return isNaN(parseInt(lastCharacter)) && lastCharacter !== '.';
   };
 
@@ -105,15 +112,20 @@
         // The finalization of the expression occurs when user presses '=' or 'Enter'
         var toEvaluate = txtDisplay.innerHTML.substring(txtDisplay.innerHTML.lastIndexOf('\n') + 1);
 
+        // Need to use regular expressions and 'g' flag to replace all instances
+        // of HTML multiply and divide signs to computer understandable multiply and divide operators
+        toEvaluate = toEvaluate.replace(/\xD7/g, '*').replace(/\xF7/g, '/');
+
         // If the currentKey pressed is one of the operators, evaluate the current, unfinalized expression
         // and sow the result in the text input only.
         if (currentKey === '+' || currentKey === '-' ||
             currentKey === '*' || currentKey === '/') {
           toEvaluate = toEvaluate || txtInput.value;
           if (isLastCharacterOperator(toEvaluate)) {
-            toEvaluate = toEvaluate.slice(0, -1);
-            txtDisplay.innerHTML = txtDisplay.innerHTML.slice(0, -1);
+            toEvaluate = toEvaluate.slice(0, -3);
+            txtDisplay.innerHTML = txtDisplay.innerHTML.slice(0, -3);
           }
+          console.log(toEvaluate);
           txtInput.value = eval(toEvaluate); // evaluate the expression using 'eval'
           event.preventDefault(); // this line doesn't let the operator to get printed in the text input
         }
@@ -136,12 +148,24 @@
         else if (currentKey === 'Backspace') {
           if (txtDisplay.innerHTML.slice(-1) !== '\n')
             txtDisplay.innerHTML = txtDisplay.innerHTML.slice(0, -1);
-        } else if (currentKey === 'Escape') {
+        }
+
+        // If the currentKey pressed is 'Escape' or user clicks 'CLEAR' button
+        // then remove the entire unfinalized expression from the textarea and empty the text input
+        else if (currentKey === 'Escape') {
           txtInput.value = '';
           txtDisplay.innerHTML = txtDisplay.innerHTML.substring(0, (txtDisplay.innerHTML.lastIndexOf('\n') + 1));
-        } else {
-          if (isLastCharacterOperator(txtDisplay.innerHTML))
-            txtInput.value = '';
+        }
+
+        // Lastly for any other key, i.e. any numeric key press, we necessarily don't have to do anything
+        // except to check if the last character in unfinalized expression is an operator
+        // it means that the text input right now contains an evaluated value
+        // and the user is typing in another operand
+        // so empty out the text input right before that happens
+        // example '1 + 2 +' in the display area means that there is '3' in text input,
+        // if user types '1', text input should display '1' and not '31'.
+        else if (isLastCharacterOperator(txtDisplay.innerHTML)) {
+          txtInput.value = '';
         }
 
         txtDisplay.innerHTML += showTypedKey(currentKey); // add the display keyValue into the textarea
@@ -150,6 +174,7 @@
         // to be at the lowermost expression being displayed
         txtDisplay.scrollTop = txtDisplay.scrollHeight;
       } catch (error) { // catch errors and display an Error in the result window (textarea)
+        console.log(error);
         txtDisplay.innerHTML += ' = Error\n';
         event.preventDefault();
       }
