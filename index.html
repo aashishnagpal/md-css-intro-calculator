@@ -6,81 +6,56 @@
     <link rel="stylesheet" type="text/css" href="styles/calculator.css"/>
 </head>
 <body>
+<header>
     <h1>CALCULATOR</h1>
-    <div>
-        <table>
-            <tr>
-                <td colspan="4">
-                    <textarea id="result" name="result">5+3/2-1&times;4</textarea>
-                </td>
-            </tr>
-            <tr>
-                <td>CLEAR</td>
-                <td>DEL</td>
-                <td>/</td>
-                <td>&times;</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>+</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td rowspan="2" id="btn-equals">=</td>
-            </tr>
-            <tr>
-                <td colspan="2">0</td>
-                <td>.</td>
-            </tr>
-        </table>
-    </div>
-    <!-- <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-            <ul>
-                <li style="border: 0; width: 3em;">
-                    <ul style="display: table-row;">
-                        <li style="display: table-cell; width: 1.5em"></li>
-                        <li style="display: table-cell; width: 1.5em"></li>
-                    </ul>
-                    <ul style="display: table-row;">
-                        <li style="display: table-cell; width: 1.5em"></li>
-                    </ul>
-                </li>
-                <li style="border: 0;">
-                    <ul style="display: table-row;">
-                        <li style="display: table-cell;"></li>
-                    </ul>
-                    <ul style="display: table-row;">
-                        <li style="display: table-cell;"></li>
-                    </ul>
-                </li>
-                <li></li>
-            </ul> -->
+    <strong>Type at the bottom of the display screen or use buttons</strong>
+</header>
+<div>
+    <table id="calculatorInputsTable">
+        <tr>
+            <td colspan="4">
+                <textarea id="historyInput" name="historyInput" readonly></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <input type="text" name="currentInput" id="currentInput" autofocus/>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="button" id="btn-clear" name="btn-clear" value="CLEAR" data-value="Escape"/></td>
+            <td><input type="button" id="btn-del" name="btn-del" value="DEL" data-value="Backspace"/></td>
+            <td><input type="button" id="btn-divide" name="btn-divide" value="&divide;" data-value="/"/></td>
+            <td><input type="button" id="btn-multiply" name="btn-multiply" value="&times;" data-value="*"/></td>
+        </tr>
+        <tr>
+            <td><input type="button" id="btn-7" name="btn-7" value="7"/></td>
+            <td><input type="button" id="btn-8" name="btn-8" value="8"/></td>
+            <td><input type="button" id="btn-9" name="btn-9" value="9"/></td>
+            <td><input type="button" id="btn-minus" name="btn-minus" value="-"/></td>
+        </tr>
+        <tr>
+            <td><input type="button" id="btn-4" name="btn-4" value="4"/></td>
+            <td><input type="button" id="btn-5" name="btn-5" value="5"/></td>
+            <td><input type="button" id="btn-6" name="btn-6" value="6"/></td>
+            <td><input type="button" id="btn-plus" name="btn-plus" value="+"/></td>
+        </tr>
+        <tr>
+            <td><input type="button" id="btn-1" name="btn-1" value="1"/></td>
+            <td><input type="button" id="btn-2" name="btn-2" value="2"/></td>
+            <td><input type="button" id="btn-3" name="btn-3" value="3"/></td>
+            <td rowspan="2"><input type="button" id="btn-equals" name="btn-equals" value="="/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="button" id="btn-0" name="btn-0" value="0"/></td>
+            <td><input type="button" id="btn-decimal" name="btn-decimal" value="."/></td>
+        </tr>
+    </table>
+</div>
+<footer>
+    DISCLAIMER: This calculator app tries to imitate the behavior of a modern-day calculator but there are still many
+    quirks that need to be resolved.
+</footer>
+<script type="text/javascript" src="js/calculator.js"></script>
 </body>
 </html>
